@@ -16,10 +16,12 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 WORKDIR /app
 
-COPY ./ .
+COPY app .
 
 RUN gradle stage
 
 CMD ./build/install/app/bin/app
 
 EXPOSE 8080
+
+CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
