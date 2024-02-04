@@ -28,6 +28,12 @@ test:
 lint:
 	./gradlew checkstyleMain checkstyleTest
 
+lint-main:
+	./gradlew checkstyleMain
+
+lint-test:
+	./gradlew  checkstyleTest
+
 last: # Last version plugin
 	./gradlew useLatestVersions
 
