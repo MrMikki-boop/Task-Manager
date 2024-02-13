@@ -1,4 +1,5 @@
 package hexlet.code.config;
+
 import hexlet.code.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -28,7 +30,8 @@ public class SecurityConfig {
 
     /**
      * Get configuration for different security levels.
-     * @param http allows configuring web based security for specific http requests
+     *
+     * @param http         allows configuring web based security for specific http requests
      * @param introspector gets information from the HandlerMapping that would serve a specific request
      * @return filter chain which is capable of being matched against an HttpServletRequest
      * in order to decide whether it applies to that request
@@ -52,6 +55,7 @@ public class SecurityConfig {
 
     /**
      * Get authentication manager.
+     *
      * @param http allows configuring web based security for specific http requests
      * @return authentication manager that processes an authentication request
      */
@@ -63,6 +67,7 @@ public class SecurityConfig {
 
     /**
      * Get authentication provider.
+     *
      * @return authentication provider that can process a specific authentication implementation
      */
     @Bean
