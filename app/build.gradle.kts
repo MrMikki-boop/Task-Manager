@@ -8,7 +8,7 @@ plugins {
 	id("io.freefair.lombok") version "8.4"
 
 	id("se.patrikerdes.use-latest-versions") version "0.2.18"
-	id("com.github.ben-manes.versions") version "0.41.0"
+	id("com.github.ben-manes.versions") version "0.51.0"
 }
 
 group = "hexlet.code"
@@ -22,6 +22,11 @@ java {
 	sourceCompatibility = JavaVersion.VERSION_21
 }
 
+jacoco {
+	toolVersion = "0.8.9"
+	reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
+}
+
 configurations {
 	compileOnly {
 		extendsFrom(configurations.annotationProcessor.get())
@@ -33,11 +38,15 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-devtools")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	compileOnly("org.projectlombok:lombok")
-	annotationProcessor("org.projectlombok:lombok")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("org.springframework.boot:spring-boot-starter:3.2.2")
+	implementation("org.springframework.boot:spring-boot-starter-web:3.2.2")
+	implementation("org.springframework.boot:spring-boot-devtools:3.2.2")
+	compileOnly("org.projectlombok:lombok:1.18.30")
+	annotationProcessor("org.projectlombok:lombok:1.18.30")
+
+	testCompileOnly("org.projectlombok:lombok:1.18.30")
+	testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
+	testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.0")
 }
 
 tasks.withType<Test> {
@@ -52,19 +61,19 @@ tasks.bootBuildImage {
 	builder.set("paketobuildpacks/builder-jammy-base:latest")
 }
 
-tasks.test {
-	useJUnitPlatform()
-	finalizedBy(tasks.jacocoTestReport)
-}
-
 tasks.withType<Test> {
 	finalizedBy(tasks.jacocoTestReport)
 }
 
+tasks.test {
+	useJUnitPlatform()
+	finalizedBy(tasks.jacocoTestReport)
+}
 tasks.jacocoTestReport {
+	dependsOn(tasks.test)
 	reports {
-		xml.required.set(true)
-		csv.required.set(true)
-		html.required.set(true)
+		xml.required = true
+		csv.required = false
+		html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
 	}
 }
