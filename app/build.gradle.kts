@@ -46,7 +46,7 @@ dependencies {
 
 	testCompileOnly("org.projectlombok:lombok:1.18.30")
 	testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
-	testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.2")
+	testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.0")
 }
 
 tasks.withType<Test> {
