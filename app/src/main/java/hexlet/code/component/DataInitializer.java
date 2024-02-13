@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public final class DataInitializer implements ApplicationRunner {
+public final class  DataInitializer implements ApplicationRunner {
 
 //    @Autowired
 //    private final PostRepository postRepository;
