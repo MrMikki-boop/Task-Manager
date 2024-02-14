@@ -3,10 +3,12 @@ plugins {
 	checkstyle
 	jacoco
 	java
+
 	id("org.springframework.boot") version "3.2.2"
 	id("io.spring.dependency-management") version "1.1.4"
 	id("io.freefair.lombok") version "8.4"
 	id ("com.adarshr.test-logger") version "4.0.0"
+	id ("io.sentry.jvm.gradle") version "4.2.0"
 
 	id("se.patrikerdes.use-latest-versions") version "0.2.18"
 	id("com.github.ben-manes.versions") version "0.51.0"
@@ -39,18 +41,18 @@ repositories {
 }
 
 dependencies {
-	// Spring Boot Starters
+	// Spring Boot Starter Dependencies
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-	// Spring Data
+	// Spring Data Dependencies
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-	// Spring Boot Security
+	// Spring Security and OAuth2 Resource Server
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
@@ -63,14 +65,16 @@ dependencies {
 	implementation("org.mapstruct:mapstruct:1.5.5.Final")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
 
-	// Jackson Databind Nullable
+	// OpenAPI Tools
 	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
-	// Database Drivers
+	// Database Dependencies
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("org.postgresql:postgresql")
 
-	// Testing
+	// Test Dependencies
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 	testImplementation(platform("org.junit:junit-bom:5.10.0"))
 	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
@@ -81,9 +85,6 @@ dependencies {
 	implementation("org.instancio:instancio-junit:3.3.0")
 	testCompileOnly("org.projectlombok:lombok:1.18.22")
 	testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
-
-	// Springdoc OpenAPI
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 }
 
 tasks.withType<Test> {
@@ -102,10 +103,25 @@ tasks.withType<Test> {
 	finalizedBy(tasks.jacocoTestReport)
 }
 
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
+sentry {
+	includeSourceContext = true
+
+	org = "anastasiya-trusova"
+	projectName = "java-spring-boot"
+	authToken = System.getenv("SENTRY_AUTH_TOKEN")
+}
+
 tasks.test {
 	useJUnitPlatform()
 	finalizedBy(tasks.jacocoTestReport)
 }
+
 tasks.jacocoTestReport {
 	dependsOn(tasks.test)
 	reports {
