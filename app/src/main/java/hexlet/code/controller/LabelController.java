@@ -1,9 +1,9 @@
 package hexlet.code.controller;
 
-import hexlet.code.dto.TaskStatusDTO.TaskStatusCreateDTO;
-import hexlet.code.dto.TaskStatusDTO.TaskStatusDTO;
-import hexlet.code.dto.TaskStatusDTO.TaskStatusUpdateDTO;
-import hexlet.code.service.TaskStatusService;
+import hexlet.code.dto.LabelDTO.LabelCreateDTO;
+import hexlet.code.dto.LabelDTO.LabelDTO;
+import hexlet.code.dto.LabelDTO.LabelUpdateDTO;
+import hexlet.code.service.LabelService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,39 +21,39 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/task_statuses")
+@RequestMapping("/api/labels")
 @AllArgsConstructor
-public class TaskStatusController {
+public class LabelController {
 
-    private TaskStatusService taskStatusService;
+    private LabelService labelService;
 
     @GetMapping
-    public ResponseEntity<List<TaskStatusDTO>> index() {
-        var result = taskStatusService.getAllStatuses();
+    public ResponseEntity<List<LabelDTO>> index() {
+        var result =  labelService.getAllLabels();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(result.size()))
                 .body(result);
     }
 
     @GetMapping("/{id}")
-    public TaskStatusDTO show(@PathVariable Long id) {
-        return taskStatusService.findById(id);
+    public LabelDTO show(@PathVariable Long id) {
+        return labelService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TaskStatusDTO create(@Valid @RequestBody TaskStatusCreateDTO dto) {
-        return taskStatusService.createStatus(dto);
+    public LabelDTO create(@Valid @RequestBody LabelCreateDTO dto) {
+        return labelService.createLabel(dto);
     }
 
     @PutMapping("/{id}")
-    public TaskStatusDTO update(@PathVariable Long id, @Valid @RequestBody TaskStatusUpdateDTO dto) {
-        return taskStatusService.updateStatus(id, dto);
+    public LabelDTO update(@PathVariable Long id, @Valid @RequestBody LabelUpdateDTO dto) {
+        return labelService.updateLabel(id, dto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
-        taskStatusService.deleteStatus(id);
+        labelService.deleteLabel(id);
     }
 }
