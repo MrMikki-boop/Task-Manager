@@ -3,23 +3,25 @@ package hexlet.code.service;
 import hexlet.code.dto.UserDTO.UserCreateDTO;
 import hexlet.code.dto.UserDTO.UserDTO;
 import hexlet.code.dto.UserDTO.UserUpdateDTO;
-import hexlet.code.exception.UserNotFoundException;
+import hexlet.code.exception.MethodNotAllowedException;
+import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.UserMapper;
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public final class UserService {
+@AllArgsConstructor
+public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private UserMapper userMapper;
-
+    private final PasswordEncoder passwordEncoder;
+    private TaskRepository taskRepository;
 
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream()
@@ -29,26 +31,37 @@ public final class UserService {
 
     public UserDTO createUser(UserCreateDTO dto) {
         var user = userMapper.map(dto);
+        var hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
         userRepository.save(user);
         return userMapper.map(user);
     }
 
     public UserDTO findById(Long userId) {
         var user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User with id: " + userId + " not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User with id: " + userId + " not found."));
 
         return userMapper.map(user);
     }
 
     public UserDTO updateUser(Long userId, UserUpdateDTO data) {
         var user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User with id: " + userId + " not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User with id: " + userId + " not found."));
         userMapper.update(data, user);
+
+        var hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
+
         userRepository.save(user);
         return userMapper.map(user);
     }
 
     public void deleteUser(Long userId) {
+        var user = userRepository.findById(userId);
+
+        if (user.isPresent() && taskRepository.findByAssigneeEmail(user.get().getEmail()).isPresent()) {
+            throw new MethodNotAllowedException("User still has task");
+        }
         userRepository.deleteById(userId);
     }
 }
