@@ -1,8 +1,8 @@
 package hexlet.code.controller.api;
 
-import hexlet.code.dto.UserCreateDTO;
-import hexlet.code.dto.UserDTO;
-import hexlet.code.dto.UserUpdateDTO;
+import hexlet.code.dto.UserDTO.UserCreateDTO;
+import hexlet.code.dto.UserDTO.UserDTO;
+import hexlet.code.dto.UserDTO.UserUpdateDTO;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 import jakarta.validation.Valid;
@@ -44,7 +44,7 @@ public final class UserController {
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<UserDTO>> index() {
-        var users = userService.getAll();
+        var users = userService.getAllUsers();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(users.size()))
                 .body(users);
@@ -53,7 +53,7 @@ public final class UserController {
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserDTO> create(@Valid @RequestBody UserCreateDTO data) throws URISyntaxException {
-        var user = userService.create(data);
+        var user = userService.createUser(data);
         return ResponseEntity.created(new URI("/api/users/" + user.getId()))
                 .body(user);
     }
@@ -61,7 +61,7 @@ public final class UserController {
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UserDTO> update(@Valid @RequestBody UserUpdateDTO data, @PathVariable Long id) {
-        var user = userService.update(data, id);
+        var user = userService.updateUser(id, data);
         return ResponseEntity.ok()
                 .body(user);
     }
@@ -69,6 +69,6 @@ public final class UserController {
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void delete(@PathVariable Long id) {
-        userService.delete(id);
+        userService.deleteUser(id);
     }
 }

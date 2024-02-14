@@ -3,6 +3,8 @@ package hexlet.code.controller.api;
 import hexlet.code.dto.AuthRequest;
 import hexlet.code.util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public final class AuthenticationController {
+public class AuthenticationController {
 
     @Autowired
     private JWTUtils jwtUtils;
@@ -21,13 +23,16 @@ public final class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public String create(@RequestBody AuthRequest authRequest) {
-        var authentication = new UsernamePasswordAuthenticationToken(
-                authRequest.getUsername(), authRequest.getPassword());
+    public ResponseEntity<String> create(@RequestBody AuthRequest authRequest) {
+        try {
+            var authentication = new UsernamePasswordAuthenticationToken(
+                    authRequest.getUsername(), authRequest.getPassword());
 
-        authenticationManager.authenticate(authentication);
+            authenticationManager.authenticate(authentication);
 
-        var token = jwtUtils.generateToken(authRequest.getUsername());
-        return token;
+            return ResponseEntity.ok(jwtUtils.generateToken(authRequest.getUsername()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }
