@@ -34,23 +34,27 @@ public class User implements UserDetails, BaseEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    private String firstname;
+    @Column(name = "firstName")
+    private String firstName;
 
-    private String lastname;
+    @Column(name = "lastName")
+    private String lastName;
 
     @Email
-    @Column(unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
     @NotBlank
     @Size(min = 3)
-    private String passwordDigest;
+    @Column(name = "password")
+    private String password;
 
     @CreatedDate
     private LocalDate createdAt;
 
     @LastModifiedDate
     private LocalDate updatedAt;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -59,7 +63,7 @@ public class User implements UserDetails, BaseEntity {
 
     @Override
     public String getPassword() {
-        return passwordDigest;
+        return password;
     }
 
     @Override
@@ -86,5 +90,4 @@ public class User implements UserDetails, BaseEntity {
     public boolean isEnabled() {
         return true;
     }
-
 }
