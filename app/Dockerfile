@@ -4,15 +4,9 @@ ARG GRADLE_VERSION=8.4
 
 RUN apt-get update && apt-get install -yq make unzip
 
-COPY gradle gradle
-COPY build.gradle.kts .
-COPY settings.gradle.kts .
-COPY gradlew .
+WORKDIR /backend
 
-RUN ./gradlew --no-daemon dependencies
-
-COPY src src
-COPY config config
+COPY ./ .
 
 RUN ./gradlew --no-daemon build
 
