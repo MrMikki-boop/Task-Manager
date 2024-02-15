@@ -1,6 +1,6 @@
 FROM eclipse-temurin:20-jdk
 
-ARG GRADLE_VERSION=8.4
+ARG GRADLE_VERSION=8.5
 
 RUN apt-get update && apt-get install -yq unzip
 
@@ -14,12 +14,12 @@ RUN mv gradle-${GRADLE_VERSION} ${GRADLE_HOME}
 
 ENV PATH=$PATH:$GRADLE_HOME/bin
 
-WORKDIR .
+WORKDIR /app
 
-COPY . .
+COPY /app .
 
-RUN gradle bootJar
+RUN ./gradlew --no-daemon build
 
-ENV PORT=$PORT
+EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","/build/libs/app-0.0.1-SNAPSHOT.jar","--spring.profiles.active=production"]
+CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
