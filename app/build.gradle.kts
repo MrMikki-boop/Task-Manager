@@ -103,20 +103,6 @@ tasks.withType<Test> {
 	finalizedBy(tasks.jacocoTestReport)
 }
 
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-}
-
-sentry {
-	includeSourceContext = true
-
-	org = "anastasiya-trusova"
-	projectName = "java-spring-boot"
-	authToken = System.getenv("SENTRY_AUTH_TOKEN")
-}
-
 tasks.test {
 	useJUnitPlatform()
 	finalizedBy(tasks.jacocoTestReport)
@@ -128,5 +114,22 @@ tasks.jacocoTestReport {
 		xml.required = true
 		csv.required = false
 		html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+	}
+
+	buildscript {
+		repositories {
+			mavenCentral()
+		}
+	}
+
+	sentry {
+		includeSourceContext = true
+		org = "dont-have-o2"
+		projectName = "java"
+		authToken = System.getenv("SENTRY_AUTH_TOKEN")
+	}
+
+	tasks.sentryBundleSourcesJava {
+		enabled = System.getenv("SENTRY_AUTH_TOKEN") != null
 	}
 }
