@@ -115,21 +115,20 @@ tasks.jacocoTestReport {
 		csv.required = false
 		html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
 	}
+}
 
-	buildscript {
-		repositories {
-			mavenCentral()
-		}
+buildscript {
+	repositories {
+		mavenCentral()
 	}
+}
 
-	sentry {
+val env = System.getenv("APP_ENV")
+sentry {
+	if (env != null && env.contentEquals("prod")) {
 		includeSourceContext = true
-		org = "dont-have-o2"
-		projectName = "java"
+		org = "noname-ab"
+		projectName = "java-spring-boot"
 		authToken = System.getenv("SENTRY_AUTH_TOKEN")
-	}
-
-	tasks.sentryBundleSourcesJava {
-		enabled = System.getenv("SENTRY_AUTH_TOKEN") != null
 	}
 }
