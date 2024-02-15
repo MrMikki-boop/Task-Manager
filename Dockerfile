@@ -20,4 +20,4 @@ COPY /app .
 
 RUN ./gradlew --no-daemon build
 
-EXPOSE 8080
+CMD java -jar build/libs/app-1.0-SNAPSHOT-all.jar
