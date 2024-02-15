@@ -21,14 +21,10 @@ jobs:
           arguments: build
           build-root-directory: app
 
-      - name: chmod +x app/gradlew
-        run: chmod +x app/gradlew
-      - name: make -C app build
-        run: make -C app build
-      - name: make -C app test
-        run: make -C app test
-      - name: make -C app lint
-        run: make -C app lint
+      - run: chmod +x app/gradlew
+      - run: make -C app build
+      - run: make -C app test
+      - run: make -C app lint
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
