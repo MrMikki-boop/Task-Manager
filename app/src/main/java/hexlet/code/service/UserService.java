@@ -1,65 +1,67 @@
 package hexlet.code.service;
 
-import hexlet.code.dto.UserCreateDTO;
-import hexlet.code.dto.UserDTO;
-import hexlet.code.dto.UserUpdateDTO;
-import hexlet.code.exception.UserNotFoundException;
+import hexlet.code.dto.UserDTO.UserCreateDTO;
+import hexlet.code.dto.UserDTO.UserDTO;
+import hexlet.code.dto.UserDTO.UserUpdateDTO;
+import hexlet.code.exception.MethodNotAllowedException;
+import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.UserMapper;
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public final class UserService {
+@AllArgsConstructor
+public class UserService {
 
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
     private UserRepository userRepository;
+    private UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+    private TaskRepository taskRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public List<UserDTO> getAll() {
-        var users = userRepository.findAll();
-        return users.stream()
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream()
                 .map(userMapper::map)
                 .toList();
     }
 
-    public UserDTO findById(Long id) {
-        var user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with ID %s not found", id)));
-        return userMapper.map(user);
-    }
-
-    public UserDTO create(UserCreateDTO data) {
-        var passwordDigest = passwordEncoder.encode(data.getPassword());
-        var user = userMapper.map(data);
-        user.setPasswordDigest(passwordDigest);
+    public UserDTO createUser(UserCreateDTO dto) {
+        var user = userMapper.map(dto);
+        var hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
         userRepository.save(user);
         return userMapper.map(user);
     }
 
-    public UserDTO update(UserUpdateDTO data, Long id) {
-        var user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with ID %s not found", id)));
+    public UserDTO findById(Long userId) {
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id: " + userId + " not found."));
+
+        return userMapper.map(user);
+    }
+
+    public UserDTO updateUser(Long userId, UserUpdateDTO data) {
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id: " + userId + " not found."));
         userMapper.update(data, user);
 
-        if (data.getPassword() != null) {
-            var passwordDigest = passwordEncoder.encode((CharSequence) data.getPassword());
-            user.setPasswordDigest(passwordDigest);
-        }
+        var hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
 
         userRepository.save(user);
         return userMapper.map(user);
     }
 
-    public void delete(Long id) {
-        userRepository.deleteById(id);
+    public void deleteUser(Long userId) {
+        var user = userRepository.findById(userId);
+
+        if (user.isPresent() && taskRepository.findByAssigneeEmail(user.get().getEmail()).isPresent()) {
+            throw new MethodNotAllowedException("User still has task");
+        }
+        userRepository.deleteById(userId);
     }
 }

@@ -1,11 +1,4 @@
 ---
-logging:
-  level:
-    root: WARN
-    org:
-      springframework:
-        # web: DEBUG
-        security: DEBUG
 spring:
   jpa:
     show-sql: true
@@ -15,9 +8,16 @@ spring:
     ansi:
       enabled: always
 
+server:
+  address: 0.0.0.0
+  port: ${PORT:8080}
+
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
 
-server:
-  address: 0.0.0.0
+sentry:
+  dsn: https://297e6cb4f473096a2b42cf451bd2c6ed@o4506747554103296.ingest.sentry.io/4506747560787968
+  # Set traces-sample-rate to 1.0 to capture 100% of transactions for performance monitoring.
+  # We recommend adjusting this value in production.
+  traces-sample-rate: 1.0

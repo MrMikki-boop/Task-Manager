@@ -3,9 +3,12 @@ plugins {
 	checkstyle
 	jacoco
 	java
+
 	id("org.springframework.boot") version "3.2.2"
 	id("io.spring.dependency-management") version "1.1.4"
 	id("io.freefair.lombok") version "8.4"
+	id ("com.adarshr.test-logger") version "4.0.0"
+	id ("io.sentry.jvm.gradle") version "4.2.0"
 
 	id("se.patrikerdes.use-latest-versions") version "0.2.18"
 	id("com.github.ben-manes.versions") version "0.51.0"
@@ -38,48 +41,50 @@ repositories {
 }
 
 dependencies {
-	// Spring Boot Starters
-	implementation("org.springframework.boot:spring-boot-starter:3.1.0")
-	implementation("org.springframework.boot:spring-boot-starter-web:3.1.0")
-	implementation("org.springframework.boot:spring-boot-devtools:3.0.4")
+	// Spring Boot Starter Dependencies
+	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-	// Lombok for Compile-time
-	compileOnly("org.projectlombok:lombok:1.18.30")
-	annotationProcessor("org.projectlombok:lombok:1.18.30")
+	// Spring Data Dependencies
+	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-	// MapStruct for Object Mapping
+	// Spring Security and OAuth2 Resource Server
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+
+	// Lombok
+	compileOnly("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+	// MapStruct
 	implementation("org.mapstruct:mapstruct:1.5.5.Final")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
+
+	// OpenAPI Tools
 	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
-	// Spring Boot Data JPA
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.0.4")
+	// Database Dependencies
+	runtimeOnly("com.h2database:h2")
+	runtimeOnly("org.postgresql:postgresql")
 
-	// Spring Boot Validation
-	implementation("org.springframework.boot:spring-boot-starter-validation:3.1.5")
-
-	// H2 Database for Development
-	runtimeOnly("com.h2database:h2:2.1.214")
-
-	// Spring Boot Configuration Processor
-	implementation("org.springframework.boot:spring-boot-configuration-processor:3.1.2")
-
-	// Spring Boot Security
-	implementation("org.springframework.boot:spring-boot-starter-security:3.0.4")
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server:3.1.0")
-
-	// Testing Dependencies
+	// Test Dependencies
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 	testImplementation(platform("org.junit:junit-bom:5.10.0"))
 	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-	testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.0")
-	testImplementation("org.springframework.security:spring-security-test:6.0.2")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.2")
 	implementation("net.datafaker:datafaker:2.0.1")
 	implementation("org.instancio:instancio-junit:3.3.0")
-
-	// Test-only Lombok Dependencies
-	testCompileOnly("org.projectlombok:lombok:1.18.30")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
+	testCompileOnly("org.projectlombok:lombok:1.18.22")
+	testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
 }
 
 tasks.withType<Test> {
@@ -98,10 +103,25 @@ tasks.withType<Test> {
 	finalizedBy(tasks.jacocoTestReport)
 }
 
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
+sentry {
+	includeSourceContext = true
+
+	org = "anastasiya-trusova"
+	projectName = "java-spring-boot"
+	authToken = System.getenv("SENTRY_AUTH_TOKEN")
+}
+
 tasks.test {
 	useJUnitPlatform()
 	finalizedBy(tasks.jacocoTestReport)
 }
+
 tasks.jacocoTestReport {
 	dependsOn(tasks.test)
 	reports {

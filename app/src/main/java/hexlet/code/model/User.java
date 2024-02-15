@@ -1,11 +1,9 @@
 package hexlet.code.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -23,50 +21,54 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-@Getter
 @Setter
-public final class User implements UserDetails, BaseEntity {
+@Getter
+public class User implements UserDetails, BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @Column(name = "firstName")
     private String firstName;
 
+    @Column(name = "lastName")
     private String lastName;
 
-    @NotBlank
-    @Column(unique = true)
     @Email
+    @Column(name = "email", unique = true)
     private String email;
 
     @NotBlank
     @Size(min = 3)
-    private String passwordDigest;
+    @Column(name = "password")
+    private String password;
 
     @CreatedDate
     private LocalDate createdAt;
 
-    @JsonIgnore
     @LastModifiedDate
     private LocalDate updatedAt;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        return new ArrayList<GrantedAuthority>();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
     public String getUsername() {
         return email;
-    }
-
-    @Override
-    public String getPassword() {
-        return passwordDigest;
     }
 
     @Override
