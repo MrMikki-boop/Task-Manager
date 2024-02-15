@@ -1,21 +1,27 @@
-FROM eclipse-temurin:20-jdk
+FROM gradle:8.2-jdk AS TEMP_BUILD_IMAGE
 
-ARG GRADLE_VERSION=8.4
+ENV APP_HOME=/usr/app/
+WORKDIR $APP_HOME
 
-RUN apt-get update && apt-get install -yq make unzip
+COPY build.gradle.kts settings.gradle.kts $APP_HOME
+COPY gradle $APP_HOME/gradle
+COPY --chown=gradle:gradle . /home/gradle/wrapper
+COPY . .
 
-COPY gradle gradle
-COPY build.gradle.kts .
-COPY settings.gradle.kts .
-COPY gradlew .
+RUN ./gradlew clean build  \
+    --no-daemon  \
+    --parallel \
+    --exclude-task test  \
+    --exclude-task :checkstyleMain  \
+    --exclude-task :checkstyleTest \
+    --exclude-task :check \
+    --exclude-task :testClasses
 
-RUN ./gradlew --no-daemon dependencies
+FROM bellsoft/liberica-openjdk-debian:latest
+LABEL name="test-manager-99"
 
-COPY src src
-COPY config config
+ENV APP_HOME=/usr/app/
+WORKDIR $APP_HOME
 
-RUN ./gradlew --no-daemon build
-
-EXPOSE 8080
-
-CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
+ENV ARTIFACT_NAME=app-20-all.jar
+ENTRYPOINT exec java -jar ${ARTIFACT_NAME}
