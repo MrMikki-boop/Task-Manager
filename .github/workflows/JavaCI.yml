@@ -21,8 +21,7 @@ jobs:
           arguments: build
           build-root-directory: app
 
-      - name: Build with Gradle details
-        run: chmod +x app/gradlew
+      - run: chmod +x app/gradlew
       - run: make -C app build
       - run: make -C app test
       - run: make -C app lint
