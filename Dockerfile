@@ -1,27 +1,25 @@
-FROM gradle:8.2-jdk AS TEMP_BUILD_IMAGE
+FROM eclipse-temurin:20-jdk
 
-ENV APP_HOME=/usr/app/
-WORKDIR $APP_HOME
+ARG GRADLE_VERSION=8.4
 
-COPY build.gradle.kts settings.gradle.kts $APP_HOME
-COPY gradle $APP_HOME/gradle
-COPY --chown=gradle:gradle . /home/gradle/wrapper
+RUN apt-get update && apt-get install -yq unzip
+
+RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
+    && unzip gradle-${GRADLE_VERSION}-bin.zip \
+    && rm gradle-${GRADLE_VERSION}-bin.zip
+
+ENV GRADLE_HOME=/opt/gradle
+
+RUN mv gradle-${GRADLE_VERSION} ${GRADLE_HOME}
+
+ENV PATH=$PATH:$GRADLE_HOME/bin
+
+WORKDIR .
+
 COPY . .
 
-RUN ./gradlew clean build  \
-    --no-daemon  \
-    --parallel \
-    --exclude-task test  \
-    --exclude-task :checkstyleMain  \
-    --exclude-task :checkstyleTest \
-    --exclude-task :check \
-    --exclude-task :testClasses
+RUN gradle bootJar
 
-FROM bellsoft/liberica-openjdk-debian:latest
-LABEL name="test-manager-99"
+ENV PORT=$PORT
 
-ENV APP_HOME=/usr/app/
-WORKDIR $APP_HOME
-
-ENV ARTIFACT_NAME=app-20-all.jar
-ENTRYPOINT exec java -jar ${ARTIFACT_NAME}
+ENTRYPOINT ["java","-jar","/build/libs/app-0.0.1-SNAPSHOT.jar","--spring.profiles.active=production"]
