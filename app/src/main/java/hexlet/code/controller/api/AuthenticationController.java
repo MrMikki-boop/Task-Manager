@@ -1,24 +1,24 @@
-package hexlet.code.controller;
+package hexlet.code.controller.api;
 
 import hexlet.code.dto.AuthRequest;
 import hexlet.code.util.JWTUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/login")
 @AllArgsConstructor
 public class AuthenticationController {
 
-    private JWTUtils jwtUtils;
-    private AuthenticationManager authenticationManager;
+    private final JWTUtils jwtUtils;
 
-    @PostMapping("/login")
+    private final AuthenticationManager authenticationManager;
+
+    @PostMapping(path = "")
+    @ResponseStatus(HttpStatus.OK)
     public String create(@RequestBody AuthRequest authRequest) {
         var authentication = new UsernamePasswordAuthenticationToken(
                 authRequest.getUsername(),
@@ -26,6 +26,7 @@ public class AuthenticationController {
 
         authenticationManager.authenticate(authentication);
 
-        return jwtUtils.generateToken(authRequest.getUsername());
+        var token = jwtUtils.generateToken(authRequest.getUsername());
+        return token;
     }
 }
