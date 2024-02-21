@@ -5,60 +5,55 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "tasks")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Task implements BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @NotBlank
-    @Column(name = "name")
+    @Column(unique = true)
     private String name;
 
-    @Column(name = "index")
     private Long index;
 
-    @Column(name = "description")
     private String description;
 
     @CreatedDate
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_status_id")
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
     private TaskStatus taskStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assignee_id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private User assignee;
 
-    @ManyToMany
-    @JoinTable(name = "tasks_labels",
-            joinColumns = @JoinColumn(name = "task_id"),
-            inverseJoinColumns = @JoinColumn(name = "labels_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Label> labels = new HashSet<>();
-
 }
