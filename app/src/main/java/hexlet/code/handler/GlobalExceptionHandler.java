@@ -12,9 +12,19 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> generalExceptionHandler(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    }
+
     @ExceptionHandler(AssociatedWithEntityException.class)
     public ResponseEntity<String> handleAssociatedWithEntityException(AssociatedWithEntityException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(MethodNotAllowedException.class)
+    public ResponseEntity<String> handleMethodNotAllowedException(MethodNotAllowedException ex) {
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(ex.getMessage());
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -22,8 +32,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-    @ExceptionHandler(MethodNotAllowedException.class)
-    public ResponseEntity<String> handleMethodNotAllowedException(MethodNotAllowedException ex) {
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(ex.getMessage());
-    }
 }
