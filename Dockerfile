@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21-jdk
 
-ARG GRADLE_VERSION=8.4
+ARG GRADLE_VERSION=8.5
 
 RUN apt-get update && apt-get install -yq unzip
 
@@ -16,8 +16,8 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 WORKDIR /app
 
-COPY ./ .
+COPY /app .
 
-RUN gradle installDist
+RUN ./gradlew --no-daemon build
 
 CMD ./build/install/app/bin/app
