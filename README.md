@@ -4,6 +4,13 @@ Task Manager – a task management system similar to [www.redmine.org](http://ww
 set tasks, assign performers and change their statuses. To work with the system, registration and authentication are
 required.
 
+| Badge              | Status                                                 |
+|--------------------|--------------------------------------------------------|
+| LIVE ON RENDER.COM | [Task Manager](https://task-manager-thwe.onrender.com) |
+
+[Or click here](https://task-manager-thwe.onrender.com/swagger-ui/index.html) if you want to explore an interactive
+documentation.
+
 ## 📝Hexlet tests and linter status:
 
 | Badge              | Status                                                                                                                                                                             |
@@ -12,8 +19,6 @@ required.
 | Java CI            | [![Java CI](https://github.com/MrMikki-boop/java-project-99/actions/workflows/JavaCI.yml/badge.svg)](https://github.com/MrMikki-boop/java-project-99/actions/workflows/JavaCI.yml) |
 | Linter             | [![Maintainability](https://api.codeclimate.com/v1/badges/75b86ba0d1dd55d4a2bd/maintainability)](https://codeclimate.com/github/MrMikki-boop/java-project-99/maintainability)      |
 | Code Coverage      | [![Test Coverage](https://api.codeclimate.com/v1/badges/75b86ba0d1dd55d4a2bd/test_coverage)](https://codeclimate.com/github/MrMikki-boop/java-project-99/test_coverage)            |
-| LIVE ON RENDER.COM | [Task Manager](https://task-manager-thwe.onrender.com)                                                                                                                             |
-
 # 📂How to use
 
 ## 🔑Get it
