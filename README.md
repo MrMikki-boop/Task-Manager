@@ -57,8 +57,8 @@ Password: qwerty
 
 |  Name  | Version |
 |:------:|:-------:|
-|  Java  |  >= 21  |
-| Gradle | >= 8.4  |
+|  Java  |  > 20   |
+| Gradle |  > 8.4  |
 
 ### 📑Stack
 
