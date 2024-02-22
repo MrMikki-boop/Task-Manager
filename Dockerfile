@@ -16,8 +16,8 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 WORKDIR /app
 
-COPY ./ .
+COPY /app .
 
-RUN gradle installDist
+RUN ./gradlew --no-daemon build
 
-CMD ./build/install/app/bin/app
+CMD java -jar build/libs/app-1.0-SNAPSHOT-all.jar
