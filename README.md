@@ -1,6 +1,6 @@
 # 📋Overview
 
-Task Manager – a task management system similar to [www.redmine.org](http://www.redmine.org/). It allows you to
+Task Manager – a task management system similar to [http://www.redmine.org/](http://www.redmine.org/). It allows you to
 set tasks, assign performers and change their statuses. To work with the system, registration and authentication are
 required.
 
