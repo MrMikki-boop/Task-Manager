@@ -1,9 +1,13 @@
 ### Hexlet tests and linter status:
 
 # :clipboard:Overview
-Task Manager – a task management system similar to [http://www.redmine.org/](http://www.redmine.org/). It allows you to set tasks, assign performers and change their statuses. To work with the system, registration and authentication are required.
+
+Task Manager – a task management system similar to [http://www.redmine.org/](http://www.redmine.org/). It allows you to
+set tasks, assign performers and change their statuses. To work with the system, registration and authentication are
+required.
 
 ## :memo:Status
+
 | Badge              | Status                                                                                                                                                                             |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Hexlet             | [![Actions Status](https://github.com/MrMikki-boop/java-project-99/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/MrMikki-boop/java-project-99/actions)         |
@@ -13,11 +17,15 @@ Task Manager – a task management system similar to [http://www.redmine.org/](h
 | LIVE ON RENDER.COM | [Task Manager](https://task-manager-thwe.onrender.com)                                                                                                                             |
 
 # :file_folder:How to use
+
 ## :key:Get it
+
 ### :floppy_disk:Clone
+
 1. `git clone https://github.com/MrMikki-boop/java-project-99.git`
 
 ### :computer:Download
+
 1. Use this [link](https://github.com/MrMikki-boop/java-project-99.git/archive/refs/heads/main.zip)
 1. Unpack in any folder you want
 
@@ -35,16 +43,20 @@ Then open http://localhost:8080 on your browser and enter admin details:
 Username: hexlet@example.com
 Password: qwerty
 ```
+
 ![First](https://i.postimg.cc/HLbTHF0S/2024-02-22-220651.png)
 ![Two](https://i.postimg.cc/tRYmxWwb/2024-02-22-220543.png)
-- You will find the administration dashboard and can explore all available options such as users, tasks, task statuses and labels.
+
+- You will find the administration dashboard and can explore all available options such as users, tasks, task statuses
+  and labels.
 
 ## :loudspeaker:Stack
 
 ### Requirements
-| Name | Version |
-| :-: |:-------:|
-| Java |  > 20   |
+
+|  Name  | Version |
+|:------:|:-------:|
+|  Java  |  > 20   |
 | Gradle |  > 8.4  |
 
 * Java
