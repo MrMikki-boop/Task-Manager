@@ -5,6 +5,7 @@ set tasks, assign performers and change their statuses. To work with the system,
 required.
 
 ## 📝Hexlet tests and linter status:
+
 | Badge              | Status                                                                                                                                                                             |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Hexlet             | [![Actions Status](https://github.com/MrMikki-boop/java-project-99/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/MrMikki-boop/java-project-99/actions)         |
@@ -57,6 +58,7 @@ Password: qwerty
 | Gradle |  > 8.4  |
 
 ### 📑Stack
+
 * Java
 * Spring Boot
 * Spring Boot Security
