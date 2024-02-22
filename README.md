@@ -1,10 +1,12 @@
-# 📋Overview
+### Hexlet tests and linter status:
 
-Task Manager – a task management system similar to [www.redmine.org](http://www.redmine.org/). It allows you to
+# :clipboard:Overview
+
+Task Manager – a task management system similar to [http://www.redmine.org/](http://www.redmine.org/). It allows you to
 set tasks, assign performers and change their statuses. To work with the system, registration and authentication are
 required.
 
-## 📝Hexlet tests and linter status:
+## :memo:Status
 
 | Badge              | Status                                                                                                                                                                             |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -14,20 +16,20 @@ required.
 | Code Coverage      | [![Test Coverage](https://api.codeclimate.com/v1/badges/75b86ba0d1dd55d4a2bd/test_coverage)](https://codeclimate.com/github/MrMikki-boop/java-project-99/test_coverage)            |
 | LIVE ON RENDER.COM | [Task Manager](https://task-manager-thwe.onrender.com)                                                                                                                             |
 
-# 📂How to use
+# :file_folder:How to use
 
-## 🔑Get it
+## :key:Get it
 
-### 💾Clone
+### :floppy_disk:Clone
 
 1. `git clone https://github.com/MrMikki-boop/java-project-99.git`
 
-### 💻Download
+### :computer:Download
 
 1. Use this [link](https://github.com/MrMikki-boop/java-project-99.git/archive/refs/heads/main.zip)
 1. Unpack in any folder you want
 
-#### 💫start
+#### start
 
 If you want to start this project locally, enter this command:
 
@@ -48,16 +50,14 @@ Password: qwerty
 - You will find the administration dashboard and can explore all available options such as users, tasks, task statuses
   and labels.
 
-## 📢Stack
+## :loudspeaker:Stack
 
-### ❗️Requirements
+### Requirements
 
 |  Name  | Version |
 |:------:|:-------:|
 |  Java  |  > 20   |
 | Gradle |  > 8.4  |
-
-### 📑Stack
 
 * Java
 * Spring Boot
