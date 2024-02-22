@@ -18,6 +18,8 @@ WORKDIR /app
 
 COPY /app .
 
-RUN ./gradlew --no-daemon build
+RUN gradle bootJar
 
-CMD ./build/install/app/bin/app
+ENV PORT=$PORT
+
+ENTRYPOINT ["java","-jar","app/build/libs/app-0.0.1-SNAPSHOT.jar","--spring.profiles.active=production"]
