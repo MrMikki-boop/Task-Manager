@@ -22,4 +22,4 @@ RUN gradle bootJar
 
 ENV PORT=$PORT
 
-ENTRYPOINT ["java","-jar","build/libs/app-0.0.1-SNAPSHOT-plain.jar","--spring.profiles.active=production"]
+CMD java -jar build/libs/app-0.0.1-SNAPSHOT-plain.jar
