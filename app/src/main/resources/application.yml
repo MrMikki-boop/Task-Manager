@@ -2,15 +2,14 @@
 spring:
   jpa:
     show-sql: true
+    generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   output:
     ansi:
       enabled: always
-
-server:
-  address: 0.0.0.0
-  port: ${PORT:8080}
+  profiles:
+    default: dev
 
 rsa:
   private-key: classpath:certs/private.pem
