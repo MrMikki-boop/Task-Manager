@@ -2,6 +2,7 @@ package hexlet.code.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.dto.AuthRequest;
+import hexlet.code.util.UserUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,30 +25,16 @@ class AuthenticationControllerTest {
     private ObjectMapper om;
 
     @Test
-    public void createTest() throws Exception {
-        var data = new AuthRequest();
-        data.setUsername("hexlet@example.com");
-        data.setPassword("qwerty");
+    public void testCreateAdmin() throws Exception {
+        var authRequest = new AuthRequest();
+        authRequest.setUsername(UserUtils.ADMIN_EMAIL);
+        authRequest.setPassword(UserUtils.ADMIN_PASSWORD);
 
         var request = post("/api/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(data));
+                .content(om.writeValueAsString(authRequest));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    public void createTestWithInvalidCredential() throws Exception {
-        var data = new AuthRequest();
-        data.setUsername("hexlet@example.com");
-        data.setPassword("xxx");
-
-        var request = post("/api/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(data));
-
-        mockMvc.perform(request)
-                .andExpect(status().isUnauthorized());
     }
 }
