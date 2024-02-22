@@ -22,8 +22,9 @@ required.
 
 ### :floppy_disk:Clone
 
-1. `git clone https://github.com/MrMikki-boop/java-project-99.git`
-
+```bash
+git clone https://github.com/MrMikki-boop/java-project-99.git
+```
 ### :computer:Download
 
 1. Use this [link](https://github.com/MrMikki-boop/java-project-99.git/archive/refs/heads/main.zip)
