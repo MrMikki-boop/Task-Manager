@@ -4,11 +4,11 @@ plugins {
 	jacoco
 	java
 
-	id("org.springframework.boot") version "3.2.3"
+	id("org.springframework.boot") version "3.2.2"
 	id("io.spring.dependency-management") version "1.1.4"
-	id("io.freefair.lombok") version "8.6"
+	id("io.freefair.lombok") version "8.4"
 	id ("com.adarshr.test-logger") version "4.0.0"
-	id ("io.sentry.jvm.gradle") version "4.3.0"
+	id ("io.sentry.jvm.gradle") version "4.2.0"
 
 	id("se.patrikerdes.use-latest-versions") version "0.2.18"
 	id("com.github.ben-manes.versions") version "0.51.0"
@@ -62,8 +62,8 @@ dependencies {
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
 	// MapStruct
-	implementation("org.mapstruct:mapstruct:1.6.0.Beta1")
-	annotationProcessor("org.mapstruct:mapstruct-processor:1.6.0.Beta1")
+	implementation("org.mapstruct:mapstruct:1.5.5.Final")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
 
 	// OpenAPI Tools
 	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
@@ -76,13 +76,13 @@ dependencies {
 	// Test Dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-	testImplementation(platform("org.junit:junit-bom:5.10.2"))
-	testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+	testImplementation(platform("org.junit:junit-bom:5.10.0"))
+	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
-	testImplementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.7")
-	implementation("net.datafaker:datafaker:2.1.0")
-	implementation("org.instancio:instancio-junit:4.3.2")
+	testImplementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.2")
+	implementation("net.datafaker:datafaker:2.0.1")
+	implementation("org.instancio:instancio-junit:3.3.0")
 	testCompileOnly("org.projectlombok:lombok:1.18.22")
 	testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
 }
