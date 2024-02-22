@@ -5,14 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-@Setter
 @Getter
+@Setter
 public class TaskStatusUpdateDTO {
-
     @NotBlank
     private JsonNullable<String> name;
 
     @NotBlank
     private JsonNullable<String> slug;
-
 }

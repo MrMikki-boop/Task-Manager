@@ -1,4 +1,4 @@
-package hexlet.code.controller;
+package hexlet.code.controller.api;
 
 import hexlet.code.dto.LabelDTO.LabelCreateDTO;
 import hexlet.code.dto.LabelDTO.LabelDTO;
@@ -25,35 +25,40 @@ import java.util.List;
 @AllArgsConstructor
 public class LabelController {
 
-    private LabelService labelService;
+    private final LabelService labelService;
 
-    @GetMapping
+    @GetMapping(path = "")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<LabelDTO>> index() {
-        var result =  labelService.getAllLabels();
+        var result = labelService.getAll();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(result.size()))
                 .body(result);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public LabelDTO show(@PathVariable Long id) {
         return labelService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
     public LabelDTO create(@Valid @RequestBody LabelCreateDTO dto) {
-        return labelService.createLabel(dto);
+        return labelService.create(dto);
     }
 
-    @PutMapping("/{id}")
-    public LabelDTO update(@PathVariable Long id, @Valid @RequestBody LabelUpdateDTO dto) {
-        return labelService.updateLabel(id, dto);
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public LabelDTO update(
+            @PathVariable Long id,
+            @Valid @RequestBody LabelUpdateDTO dto) {
+        return labelService.update(id, dto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        labelService.deleteLabel(id);
+    public void destroy(@PathVariable Long id) {
+        labelService.delete(id);
     }
 }

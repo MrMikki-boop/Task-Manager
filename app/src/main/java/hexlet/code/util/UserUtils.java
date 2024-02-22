@@ -2,15 +2,21 @@ package hexlet.code.util;
 
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
-public final class UserUtils {
-    @Autowired
-    private UserRepository userRepository;
+@AllArgsConstructor
+public class UserUtils {
 
+    public static final String ADMIN_EMAIL = "hexlet@example.com";
+    public static final String ADMIN_PASSWORD = "qwerty";
+
+    private final UserRepository userRepository;
+
+    @Bean
     public User getCurrentUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -18,5 +24,13 @@ public final class UserUtils {
         }
         var email = authentication.getName();
         return userRepository.findByEmail(email).get();
+    }
+
+    @Bean
+    public User getAdmin() {
+        var admin = new User();
+        admin.setEmail(UserUtils.ADMIN_EMAIL);
+        admin.setPassword(UserUtils.ADMIN_PASSWORD);
+        return admin;
     }
 }

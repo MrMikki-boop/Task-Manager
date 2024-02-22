@@ -1,4 +1,4 @@
-package hexlet.code.controller;
+package hexlet.code.controller.api;
 
 import hexlet.code.dto.TaskDTO.TaskCreateDTO;
 import hexlet.code.dto.TaskDTO.TaskDTO;
@@ -26,35 +26,40 @@ import java.util.List;
 @AllArgsConstructor
 public class TaskController {
 
-    private TaskService taskService;
+    private final TaskService taskService;
 
-    @GetMapping
-    public ResponseEntity<List<TaskDTO>> index(TaskParamsDTO paramsDTO) {
-        var result = taskService.getAllTasks(paramsDTO);
+    @GetMapping(path = "")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<TaskDTO>> index(TaskParamsDTO params) {
+        var result = taskService.getAll(params);
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(result.size()))
                 .body(result);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public TaskDTO show(@PathVariable Long id) {
         return taskService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskDTO create(@Valid @RequestBody TaskCreateDTO dto) {
-        return taskService.createTask(dto);
+        return taskService.create(dto);
     }
 
-    @PutMapping("/{id}")
-    public TaskDTO update(@PathVariable Long id, @Valid @RequestBody TaskUpdateDTO dto) {
-        return taskService.updateTask(id, dto);
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public TaskDTO update(
+            @PathVariable Long id,
+            @Valid @RequestBody TaskUpdateDTO dto) {
+        return taskService.update(id, dto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        taskService.deleteTask(id);
+    public void destroy(@PathVariable Long id) {
+        taskService.delete(id);
     }
 }
