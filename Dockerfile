@@ -20,6 +20,6 @@ COPY /app .
 
 RUN gradle bootJar
 
-ENV PORT=$PORT
+EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","/build/libs/app-0.0.1-SNAPSHOT.jar","--spring.profiles.active=production"]
+CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
