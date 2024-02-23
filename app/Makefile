@@ -7,8 +7,8 @@ build: # Build app
 	./gradlew clean
 	./gradlew installDist
 
-report:
-		./gradlew jacocoTestReport jacocoTestCoverageVerification
+assemble:
+	./gradlew assemble
 
 run-dist: # Run app
 		./build/install/app/bin/app
@@ -25,6 +25,9 @@ run:
 test:
 		./gradlew test
 
+report:
+		./gradlew jacocoTestReport jacocoTestCoverageVerification
+
 lint:
 	./gradlew checkstyleMain checkstyleTest
 
@@ -33,9 +36,6 @@ lint-main:
 
 lint-test:
 	./gradlew  checkstyleTest
-
-assemble:
-	./gradlew assemble
 
 last: # Last version plugin
 	./gradlew useLatestVersions
