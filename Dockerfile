@@ -1,15 +1,3 @@
-FROM node:20.6.1 AS app
-
-WORKDIR /app
-
-COPY app/package*.json .
-
-RUN npm ci
-
-COPY /app .
-
-RUN npm run build
-
 FROM eclipse-temurin:21-jdk
 
 ARG GRADLE_VERSION=8.4
@@ -30,8 +18,6 @@ WORKDIR /app
 
 COPY /app .
 
-RUN ./gradlew --no-daemon build
+RUN gradle installDist
 
-EXPOSE ${PORT}
-
-CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
+CMD build/install/app/bin/app
