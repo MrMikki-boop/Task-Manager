@@ -1,12 +1,12 @@
-FROM node:20.6.1 AS frontend
+FROM node:20.6.1 AS app
 
-WORKDIR /frontend
+WORKDIR /app
 
-COPY frontend/package*.json .
+COPY app/package*.json .
 
 RUN npm ci
 
-COPY frontend /frontend
+COPY /app .
 
 RUN npm run build
 
