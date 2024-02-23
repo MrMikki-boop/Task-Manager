@@ -18,8 +18,10 @@ WORKDIR /app
 
 COPY /app .
 
-RUN gradle installDist
+RUN chmod +x gradlew
+
+RUN gradle bootJar
 
 EXPOSE 8080
 
-CMD build/install/app/bin/app
+CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
