@@ -2,7 +2,7 @@ FROM eclipse-temurin:21-jdk
 
 ARG GRADLE_VERSION=8.4
 
-RUN apt-get update && apt-get install -yq unzip
+RUN apt-get update && apt-get install -y gradle
 
 RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
     && unzip gradle-${GRADLE_VERSION}-bin.zip \
@@ -19,6 +19,7 @@ WORKDIR /app
 COPY /app .
 
 RUN chmod +x gradlew
+RUN chmod +x gradle
 
 RUN gradle bootJar
 
