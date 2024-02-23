@@ -9,6 +9,7 @@ plugins {
 	id("io.freefair.lombok") version "8.4"
 	id ("com.adarshr.test-logger") version "4.0.0"
 	id ("io.sentry.jvm.gradle") version "4.2.0"
+	id("com.github.johnrengelman.shadow") version "8.1.1"
 
 	id("se.patrikerdes.use-latest-versions") version "0.2.18"
 	id("com.github.ben-manes.versions") version "0.51.0"
