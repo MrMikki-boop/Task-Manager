@@ -18,6 +18,10 @@ WORKDIR /app
 
 COPY /app .
 
+# Копируем gradlew и gradle в корень проекта
+COPY app/gradle/wrapper/gradlew /app
+COPY app/gradle/wrapper/gradle /app
+
 RUN chmod +x gradlew
 RUN chmod +x gradle
 
@@ -26,3 +30,4 @@ RUN gradle bootJar
 EXPOSE 8080
 
 CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
+
