@@ -1,13 +1,5 @@
 ### Hexlet tests and linter status:
 
-# 📋Overview
-
-Task Manager – a task management system similar to [redmine](http://www.redmine.org/). It allows you to
-set tasks, assign performers and change their statuses. To work with the system, registration and authentication are
-required.
-
-## 📝Status
-
 | Badge              | Status                                                                                                                                                                             |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Hexlet             | [![Actions Status](https://github.com/MrMikki-boop/java-project-99/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/MrMikki-boop/java-project-99/actions)         |
@@ -15,6 +7,12 @@ required.
 | Linter             | [![Maintainability](https://api.codeclimate.com/v1/badges/75b86ba0d1dd55d4a2bd/maintainability)](https://codeclimate.com/github/MrMikki-boop/java-project-99/maintainability)      |
 | Code Coverage      | [![Test Coverage](https://api.codeclimate.com/v1/badges/75b86ba0d1dd55d4a2bd/test_coverage)](https://codeclimate.com/github/MrMikki-boop/java-project-99/test_coverage)            |
 | LIVE ON RENDER.COM | [Task Manager](https://task-manager-thwe.onrender.com)                                                                                                                             |
+
+# 📋Overview
+
+Task Manager – a task management system similar to [redmine](http://www.redmine.org/). It allows you to
+set tasks, assign performers and change their statuses. To work with the system, registration and authentication are
+required.
 
 # 📂How to use
 

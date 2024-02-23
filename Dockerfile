@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21-jdk
 
-ARG GRADLE_VERSION=8.5
+ARG GRADLE_VERSION=8.4
 
 RUN apt-get update && apt-get install -yq unzip
 
@@ -16,9 +16,13 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 WORKDIR /app
 
-COPY /app .
+# Копируем все содержимое проекта в контейнер
+COPY . .
 
-RUN gradle bootJar
+# Переместим файлы gradle внутрь контейнера
+RUN mv gradle /app/gradle
+
+RUN ./gradlew --no-daemon build
 
 EXPOSE 8080
 
