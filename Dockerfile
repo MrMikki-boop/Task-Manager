@@ -2,7 +2,7 @@ FROM eclipse-temurin:21-jdk
 
 ARG GRADLE_VERSION=8.4
 
-RUN apt-get update && apt-get install -y gradle && apt-get install -yq unzip
+RUN apt-get update && apt-get install -yq unzip
 
 RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
     && unzip gradle-${GRADLE_VERSION}-bin.zip \
@@ -16,18 +16,9 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 WORKDIR /app
 
-COPY /app .
+COPY ./ .
 
-# Копируем gradlew и gradle в корень проекта
-COPY app/gradle/wrapper/gradlew /app
-COPY app/gradle/wrapper/gradle /app
+RUN gradle installDist
 
-RUN chmod +x gradlew
-RUN chmod +x gradle
-
-RUN gradle bootJar
-
-EXPOSE 8080
-
-CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
+CMD build/install/app/bin/app
 
