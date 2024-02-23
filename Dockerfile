@@ -20,6 +20,8 @@ COPY /app .
 
 RUN chmod +x gradlew
 
-RUN gradle installDist
+RUN gradle bootJar
 
-CMD build/install/app/bin/app
+EXPOSE 8080
+
+CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
