@@ -23,15 +23,13 @@ jobs:
 
       - run: chmod +x app/gradlew
       - name: Install
-        run: make install
+        run: make -C app install
       - name: Run linter
-        run: make lint
+        run: make -C app lint
       - name: Run tests
-        run: make test
+        run: make -C app test
       - name: Build dist
-        run: make build
-      - name: Publish
-        run: make publish
+        run: make -C app build
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
