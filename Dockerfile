@@ -16,13 +16,14 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 WORKDIR /app
 
-COPY gradlew .
-COPY gradle/wrapper ./gradle/wrapper
+# Копируем все содержимое проекта в контейнер
 COPY . .
+
+# Переместим файлы gradle внутрь контейнера
+RUN mv gradle /app/gradle
 
 RUN ./gradlew --no-daemon build
 
 EXPOSE 8080
 
 CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
-
