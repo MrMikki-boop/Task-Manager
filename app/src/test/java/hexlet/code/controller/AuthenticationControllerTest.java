@@ -35,6 +35,7 @@ class AuthenticationControllerTest {
                 .content(om.writeValueAsString(authRequest));
 
         mockMvc.perform(request)
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andDo(result -> System.out.println(result.getResponse().getContentAsString()));
     }
 }

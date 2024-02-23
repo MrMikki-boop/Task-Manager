@@ -34,10 +34,13 @@ lint-main:
 lint-test:
 	./gradlew  checkstyleTest
 
+assemble:
+	./gradlew assemble
+
 last: # Last version plugin
 	./gradlew useLatestVersions
 
-build-run: build run-dist
+build-run: build assemble
 build-test: build test report
 
 .PHONY: build

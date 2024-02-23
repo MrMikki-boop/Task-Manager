@@ -20,7 +20,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,10 +49,10 @@ public class User implements BaseEntity, UserDetails {
     private String password;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @LastModifiedDate
-    private LocalDateTime updatedAt;
+    private LocalDate updatedAt;
 
     @OneToMany(mappedBy = "assignee", cascade = CascadeType.MERGE)
     private List<Task> tasks = new ArrayList<>();
