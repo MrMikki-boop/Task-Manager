@@ -28,8 +28,6 @@ jobs:
         run: make -C app lint
       - name: Run tests
         run: make -C app test
-      - name: Install
-        run: make -C app install
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
