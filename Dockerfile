@@ -18,6 +18,8 @@ WORKDIR /app
 
 COPY /app .
 
+RUN gradle wrapper
+
 RUN chmod +x gradlew
 
 RUN gradle bootJar
