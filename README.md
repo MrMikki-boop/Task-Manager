@@ -1,10 +1,12 @@
+### Hexlet tests and linter status:
+
 # 📋Overview
 
-Task Manager – a task management system similar to [www.redmine.org](http://www.redmine.org/). It allows you to
+Task Manager – a task management system similar to [redmine](http://www.redmine.org/). It allows you to
 set tasks, assign performers and change their statuses. To work with the system, registration and authentication are
 required.
 
-## 📝Hexlet tests and linter status:
+## 📝Status
 
 | Badge              | Status                                                                                                                                                                             |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -20,7 +22,9 @@ required.
 
 ### 💾Clone
 
-1. `git clone https://github.com/MrMikki-boop/java-project-99.git`
+```bash
+git clone https://github.com/MrMikki-boop/java-project-99.git
+```
 
 ### 💻Download
 
@@ -56,8 +60,6 @@ Password: qwerty
 |:------:|:-------:|
 |  Java  |  > 20   |
 | Gradle |  > 8.4  |
-
-### 📑Stack
 
 * Java
 * Spring Boot
