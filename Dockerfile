@@ -1,3 +1,15 @@
+FROM node:20.6.1 AS frontend
+
+WORKDIR /frontend
+
+COPY frontend/package*.json .
+
+RUN npm ci
+
+COPY frontend /frontend
+
+RUN npm run build
+
 FROM eclipse-temurin:21-jdk
 
 ARG GRADLE_VERSION=8.4
@@ -18,7 +30,7 @@ WORKDIR /app
 
 COPY /app .
 
-RUN gradle bootJar
+RUN ./gradlew --no-daemon build
 
 EXPOSE ${PORT}
 
