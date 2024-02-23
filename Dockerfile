@@ -16,7 +16,9 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 WORKDIR /app
 
-COPY ./ .
+COPY gradlew .
+COPY gradle/wrapper ./gradle/wrapper
+COPY . .
 
 RUN ./gradlew --no-daemon build
 
