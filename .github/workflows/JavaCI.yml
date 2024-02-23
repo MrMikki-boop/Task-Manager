@@ -22,14 +22,14 @@ jobs:
           build-root-directory: app
 
       - run: chmod +x app/gradlew
-      - name: Install
-        run: make -C app install
+      - name: Build dist
+        run: make -C app build
       - name: Run linter
         run: make -C app lint
       - name: Run tests
         run: make -C app test
-      - name: Build dist
-        run: make -C app build
+      - name: Install
+        run: make -C app install
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
