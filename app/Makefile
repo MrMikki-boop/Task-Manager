@@ -2,10 +2,17 @@
 .DEFAULT_GOAL := build-run
 
 
+setup:make
+	gradle wrapper --gradle-version 8.4
 
-build: # Build app
-	./gradlew clean
-	./gradlew installDist
+check-deps:
+	./gradlew dependencyUpdates -Drevision=release
+
+build:
+	./gradlew clean build
+
+install:
+	./gradlew clean installDist
 
 assemble:
 	./gradlew assemble
@@ -14,10 +21,10 @@ run-dist: # Run app
 		./build/install/app/bin/app
 
 start:
-	./gradlew bootRun --args='--spring.profiles.active=dev'
+	./gradlew bootRun --args='--spring.profiles.active=development'
 
 start-prod:
-	./gradlew bootRun --args='--spring.profiles.active=prod'
+	./gradlew bootRun --args='--spring.profiles.active=production'
 
 run:
 	./gradlew run
