@@ -34,13 +34,13 @@ public class DataInitializer implements ApplicationRunner {
 
         var defaultTaskStatuses = taskStatusUtils.getDefaultTaskStatuses();
 
-        for (var status: defaultTaskStatuses) {
+        for (var status : defaultTaskStatuses) {
             taskStatusRepository.save(status);
         }
 
         var defaultLabels = labelUtils.getDefaultLabels();
 
-        for (var label: defaultLabels) {
+        for (var label : defaultLabels) {
             labelRepository.save(label);
         }
     }

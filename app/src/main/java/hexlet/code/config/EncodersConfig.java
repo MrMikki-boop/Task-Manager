@@ -25,6 +25,7 @@ public class EncodersConfig {
 
     /**
      * Get password encoder.
+     *
      * @return password encoder that uses the BCrypt strong hashing function
      */
     @Bean
@@ -34,6 +35,7 @@ public class EncodersConfig {
 
     /**
      * Get JWT-encoder.
+     *
      * @return Nimbus JWT-encoder with the given parameters
      */
     @Bean
@@ -45,6 +47,7 @@ public class EncodersConfig {
 
     /**
      * Get JWT-decoder.
+     *
      * @return Nimbus JWT-decoder with the given parameters
      */
     @Bean
