@@ -16,13 +16,11 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 WORKDIR /app
 
-# Копируем все содержимое проекта в контейнер
-COPY . .
+COPY /app .
 
-# Переместим файлы gradle внутрь контейнера
-RUN mv gradle /app/gradle
+RUN chmod +x gradlew
 
-RUN ./gradlew --no-daemon build
+RUN gradle bootJar
 
 EXPOSE 8080
 
