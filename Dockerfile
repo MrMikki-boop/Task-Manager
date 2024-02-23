@@ -2,7 +2,7 @@ FROM eclipse-temurin:21-jdk
 
 ARG GRADLE_VERSION=8.4
 
-RUN apt-get update && apt-get install -y gradle
+RUN apt-get update && apt-get install -y gradle && apt-get install -yq unzip
 
 RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
     && unzip gradle-${GRADLE_VERSION}-bin.zip \
