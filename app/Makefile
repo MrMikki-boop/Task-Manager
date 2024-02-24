@@ -1,6 +1,8 @@
 # Makefile
 .DEFAULT_GOAL := build-run
 
+start:
+	chmod +x Makefile
 
 setup:make
 	gradle wrapper --gradle-version 8.4
