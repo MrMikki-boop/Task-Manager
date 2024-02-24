@@ -40,3 +40,4 @@ out/
 .frontend-gradle-plugin/
 
 *.db
+/node_modules/
