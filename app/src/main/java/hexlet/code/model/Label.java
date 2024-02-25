@@ -22,9 +22,9 @@ import java.util.List;
 @Entity
 @Table(name = "labels")
 @EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Label implements BaseEntity {
 
     @Id
