@@ -1,5 +1,8 @@
 .DEFAULT_GOAL := run-dist
 
+chmod:
+	make -C app chmod
+
 run-dist:
 	make -C app run-dist
 
