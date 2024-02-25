@@ -11,7 +11,7 @@ check-deps:
 	./gradlew dependencyUpdates -Drevision=release
 
 build:
-	./gradlew clean build
+	./gradlew clean build wrapper
 
 install:
 	./gradlew clean installDist
