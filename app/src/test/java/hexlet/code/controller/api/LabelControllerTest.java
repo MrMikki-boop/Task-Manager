@@ -52,7 +52,6 @@ public class LabelControllerTest {
     private TestUtils testUtils;
 
     private JwtRequestPostProcessor token;
-    private Label testLabel;
 
     @BeforeEach
     public void setUp() {
