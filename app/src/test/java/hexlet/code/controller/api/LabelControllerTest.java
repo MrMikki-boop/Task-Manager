@@ -27,6 +27,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +52,7 @@ public class LabelControllerTest {
     private TestUtils testUtils;
 
     private JwtRequestPostProcessor token;
+    private Label testLabel;
 
     @BeforeEach
     public void setUp() {
@@ -139,6 +142,31 @@ public class LabelControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(label));
 
+        var result = mockMvc.perform(request)
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        var body = result.getResponse().getContentAsString();
+
+        var id = om.readTree(body).get("id").asLong();
+        assertThat(labelRepository.findById(id)).isPresent();
+
+        var addedLabel = labelRepository.findById(id).get();
+        assertNotNull(addedLabel);
+        assertThatJson(body).isNotNull().and(
+                json -> json.node("id").isEqualTo(addedLabel.getId()),
+                json -> json.node("name").isEqualTo(addedLabel.getName()),
+                json -> json.node("createdAt").isEqualTo(addedLabel.getCreatedAt().format(TestUtils.FORMATTER))
+        );
+    }
+
+    @Test
+    public void testLabelCreate() throws Exception {
+        var label = testUtils.generateLabel();
+        var request = post("/api/labels")
+                .with(token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(label));
         var result = mockMvc.perform(request)
                 .andExpect(status().isCreated())
                 .andReturn();
