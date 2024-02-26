@@ -1,135 +1,135 @@
 plugins {
-	application
-	checkstyle
-	jacoco
-	java
+    application
+    checkstyle
+    jacoco
+    java
 
-	id("org.springframework.boot") version "3.2.2"
-	id("io.spring.dependency-management") version "1.1.4"
-	id("io.freefair.lombok") version "8.4"
-	id ("com.adarshr.test-logger") version "4.0.0"
-	id ("io.sentry.jvm.gradle") version "4.2.0"
-	id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("org.springframework.boot") version "3.2.3"
+    id("io.spring.dependency-management") version "1.1.4"
+    id("io.freefair.lombok") version "8.6"
+    id("com.adarshr.test-logger") version "4.0.0"
+    id("io.sentry.jvm.gradle") version "4.3.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 
-	id("se.patrikerdes.use-latest-versions") version "0.2.18"
-	id("com.github.ben-manes.versions") version "0.51.0"
+    id("se.patrikerdes.use-latest-versions") version "0.2.18"
+    id("com.github.ben-manes.versions") version "0.51.0"
 }
 
 group = "hexlet.code"
 version = "0.0.1-SNAPSHOT"
 
 application {
-	mainClass.set("hexlet.code.AppApplication")
+    mainClass.set("hexlet.code.AppApplication")
 }
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 jacoco {
-	toolVersion = "0.8.9"
-	reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
+    toolVersion = "0.8.9"
+    reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
 }
 
 configurations {
-	compileOnly {
-		extendsFrom(configurations.annotationProcessor.get())
-	}
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	// Spring Boot Starter Dependencies
-	implementation("org.springframework.boot:spring-boot-starter")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
+    // Spring Boot Starter Dependencies
+    implementation("org.springframework.boot:spring-boot-starter:3.2.3")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
+    developmentOnly("org.springframework.boot:spring-boot-devtools:3.2.3")
 
-	// Spring Data Dependencies
-	implementation("org.springframework.boot:spring-boot-starter-jdbc")
-	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    // Spring Data Dependencies
+    implementation("org.springframework.boot:spring-boot-starter-jdbc:3.2.3")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc:3.2.3")
+    implementation("org.springframework.boot:spring-boot-starter-validation:3.2.3")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.3")
 
-	// Spring Security and OAuth2 Resource Server
-	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    // Spring Security and OAuth2 Resource Server
+    implementation("org.springframework.boot:spring-boot-starter-security:3.2.3")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server:3.2.3")
 
-	// Lombok
-	compileOnly("org.projectlombok:lombok")
-	annotationProcessor("org.projectlombok:lombok")
-	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    // Lombok
+    compileOnly("org.projectlombok:lombok:1.18.22")
+    annotationProcessor("org.projectlombok:lombok:1.18.22")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:3.2.3")
 
-	// MapStruct
-	implementation("org.mapstruct:mapstruct:1.5.5.Final")
-	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
+    // MapStruct
+    implementation("org.mapstruct:mapstruct:1.6.0.Beta1")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.0.Beta1")
 
-	// OpenAPI Tools
-	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+    // OpenAPI Tools
+    implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
-	// Database Dependencies
-	runtimeOnly("com.h2database:h2")
-	runtimeOnly("org.postgresql:postgresql")
+    // Database Dependencies
+    runtimeOnly("com.h2database:h2:2.2.224")
+    runtimeOnly("org.postgresql:postgresql:42.7.2")
 
-	// Test Dependencies
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-	testImplementation(platform("org.junit:junit-bom:5.10.0"))
-	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.security:spring-security-test")
-	testImplementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.2")
-	implementation("net.datafaker:datafaker:2.0.1")
-	implementation("org.instancio:instancio-junit:3.3.0")
-	testCompileOnly("org.projectlombok:lombok:1.18.22")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
+    // Test Dependencies
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.3")
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc:3.0.1")
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.3")
+    testImplementation("org.springframework.security:spring-security-test:6.2.2")
+    testImplementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.7")
+    implementation("net.datafaker:datafaker:2.1.0")
+    implementation("org.instancio:instancio-junit:4.3.2")
+    testCompileOnly("org.projectlombok:lombok:1.18.22")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 checkstyle {
-	toolVersion = "10.3.3"
+    toolVersion = "10.3.3"
 }
 
 tasks.bootBuildImage {
-	builder.set("paketobuildpacks/builder-jammy-base:latest")
+    builder.set("paketobuildpacks/builder-jammy-base:latest")
 }
 
 tasks.withType<Test> {
-	finalizedBy(tasks.jacocoTestReport)
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.test {
-	useJUnitPlatform()
-	finalizedBy(tasks.jacocoTestReport)
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.jacocoTestReport {
-	dependsOn(tasks.test)
-	reports {
-		xml.required = true
-		csv.required = false
-		html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
-	}
+    dependsOn(tasks.test)
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+    }
 }
 
 buildscript {
-	repositories {
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 }
 
 val env = System.getenv("APP_ENV")
 sentry {
-	if (env != null && env.contentEquals("prod")) {
-		includeSourceContext = true
-		org = "noname-ab"
-		projectName = "java-spring-boot"
-		authToken = System.getenv("SENTRY_AUTH_TOKEN")
-	}
+    if (env != null && env.contentEquals("prod")) {
+        includeSourceContext = true
+        org = "noname-ab"
+        projectName = "java-spring-boot"
+        authToken = System.getenv("SENTRY_AUTH_TOKEN")
+    }
 }
