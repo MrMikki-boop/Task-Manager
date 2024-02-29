@@ -18,12 +18,16 @@ plugins {
 group = "hexlet.code"
 version = "0.0.1-SNAPSHOT"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
+application { mainClass.set("hexlet.code.AppApplication") }
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
 }
 
-application {
-    mainClass = "hexlet.code.AppApplication"
+repositories {
+    mavenCentral()
 }
 
 jacoco {
@@ -35,10 +39,6 @@ configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -115,12 +115,6 @@ tasks.jacocoTestReport {
         xml.required = true
         csv.required = false
         html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
-    }
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
     }
 }
 
