@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := run-dist
 
 chmod:
-	chmod +x Makefile gradlew
+	chmod +x gradlew
 
 setup:make
 	gradle wrapper --gradle-version 8.4
