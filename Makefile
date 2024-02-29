@@ -1,36 +1,55 @@
+# Makefile
 .DEFAULT_GOAL := run-dist
 
 chmod:
-	make -C app chmod
+	chmod +x Makefile gradlew
 
-run-dist:
-	make -C app run-dist
+setup:make
+	gradle wrapper --gradle-version 8.4
 
-clean:
-	make -C app clean
+check-deps:
+	./gradlew dependencyUpdates -Drevision=release
 
 build:
-	make -C app build
+	./gradlew clean build wrapper
 
 install:
-	make -C app install
+	./gradlew clean installDist
 
-run-dist:
-	make -C run-dist
+assemble:
+	./gradlew assemble
+
+run-dist: # Run app
+		./build/install/app/bin/app
+
+start:
+	./gradlew bootRun --args='--spring.profiles.active=development'
+
+start-prod:
+	./gradlew bootRun --args='--spring.profiles.active=production'
 
 run:
-	make -C app run
+	./gradlew run
 
 test:
-	make -C app test
+	./gradlew test
 
 report:
-	make -C app report
+	./gradlew jacocoTestReport jacocoTestCoverageVerification
 
 lint:
-	make -C app lint
+	./gradlew checkstyleMain checkstyleTest
 
-update-deps:
-	make -C app update-deps
+lint-main:
+	./gradlew checkstyleMain
+
+lint-test:
+	./gradlew  checkstyleTest
+
+last: # Last version plugin
+	./gradlew useLatestVersions
+
+build-run: build assemble
+build-test: build test report
 
 .PHONY: build
