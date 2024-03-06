@@ -1,4 +1,4 @@
-package hexlet.code.dto.TaskStatusDTO;
+package hexlet.code.dto.taskStatusDTO;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

@@ -1,30 +1,29 @@
-package hexlet.code.dto.TaskDTO;
+package hexlet.code.dto.taskDTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.List;
 
 @Getter
 @Setter
-public class TaskCreateDTO {
+public class TaskUpdateDTO {
     @NotBlank
-    private String title;
+    private JsonNullable<String> title;
 
-    @Column(unique = true)
-    private Long index;
+    private JsonNullable<Long> index;
 
-    private String content;
+    private JsonNullable<String> content;
 
     @JsonProperty("assignee_id")
-    private Long assigneeId;
+    private JsonNullable<Long> assigneeId;
 
     @NotNull
-    private String status;
+    private JsonNullable<String> status;
 
     private List<Long> taskLabelIds;
 }
