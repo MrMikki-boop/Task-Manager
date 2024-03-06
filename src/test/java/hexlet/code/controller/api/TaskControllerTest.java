@@ -187,18 +187,19 @@ public class TaskControllerTest {
 
         var newTitle = "new title";
 
-        var data = new HashMap<>();
-        data.put("title", newTitle);
+        var updateDTO = new HashMap<String, Object>();
+        updateDTO.put("title", newTitle);
 
         var request = put("/api/tasks/" + task.getId())
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(data));
+                .content(om.writeValueAsString(updateDTO));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        task = taskRepository.findById(task.getId()).get();
+        task = taskRepository.findById(task.getId()).orElse(null);
+        assertThat(task).isNotNull();
         assertThat(task.getName()).isEqualTo(newTitle);
     }
 
