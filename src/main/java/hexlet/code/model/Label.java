@@ -4,8 +4,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
@@ -22,9 +22,9 @@ import java.util.List;
 @Entity
 @Table(name = "labels")
 @EntityListeners(AuditingEntityListener.class)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Label implements BaseEntity {
 
     @Id
@@ -37,6 +37,7 @@ public class Label implements BaseEntity {
     private String name;
 
     @CreatedDate
+    @Column(name = "created_at")
     private LocalDate createdAt;
 
     @ManyToMany(mappedBy = "labels", cascade = CascadeType.MERGE)

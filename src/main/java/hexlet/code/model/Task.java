@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -37,23 +39,33 @@ public class Task implements BaseEntity {
     private Long id;
 
     @NotBlank
-    @Column(unique = true)
+    @Column(name = "name", unique = true)
     private String name;
 
+    @Column(name = "index")
     private Long index;
 
+    @Column(name = "description")
     private String description;
 
     @CreatedDate
+    @Column(name = "created_at")
     private LocalDate createdAt;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "task_status_id")
     private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "assignee_id")
     private User assignee;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "task_labels",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "label_id")
+    )
     private Set<Label> labels = new HashSet<>();
 }

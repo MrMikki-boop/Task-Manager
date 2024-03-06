@@ -38,8 +38,10 @@ public class User implements BaseEntity, UserDetails {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "last_name")
     private String lastName;
 
     @Email
@@ -49,13 +51,17 @@ public class User implements BaseEntity, UserDetails {
     private String password;
 
     @CreatedDate
+    @Column(name = "created_at")
     private LocalDate createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private LocalDate updatedAt;
 
     @OneToMany(mappedBy = "assignee", cascade = CascadeType.MERGE)
     private List<Task> tasks = new ArrayList<>();
+
+    // UserDetails methods
 
     @Override
     public String getPassword() {
@@ -74,7 +80,7 @@ public class User implements BaseEntity, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<GrantedAuthority>();
+        return new ArrayList<>(); // Пока не используем роли
     }
 
     @Override
