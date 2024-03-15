@@ -8,7 +8,7 @@
 | Code Coverage      | [![Test Coverage](https://api.codeclimate.com/v1/badges/75b86ba0d1dd55d4a2bd/test_coverage)](https://codeclimate.com/github/MrMikki-boop/java-project-99/test_coverage)            |
 | LIVE ON RENDER.COM | [Task Manager](https://task-manager-thwe.onrender.com)                                                                                                                             |
 
-# 📋Overview
+# 📋Task Manager
 
 Task Manager – a task management system similar to [http://www.redmine.org/](http://www.redmine.org/). It allows you to
 set tasks, assign performers and change their statuses. To work with the system, registration and authentication are
